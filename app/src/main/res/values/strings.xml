@@ -1,0 +1,349 @@
+<resources>
+    <string name="app_name">WeatherView</string>
+    <string name="title_activity_nav_drawer">WeatherView</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="states">
+        <item>MA</item>
+        <item>CA</item>
+        <item>NY</item>
+        <item>FL</item>
+
+    </string-array>
+
+
+    <string name="data"> {
+  "forecastday": [{
+  "date": {
+  "epoch": "1340776800",
+  "pretty": "11:00 PM PDT on June 26, 2012",
+  "day": 26,
+  "month": 6,
+  "year": 2012,
+  "yday": 177,
+  "hour": 23,
+  "min": "00",
+  "sec": 0,
+  "isdst": "1",
+  "monthname": "June",
+  "weekday_short": "Tue",
+  "weekday": "Tuesday",
+  "ampm": "PM",
+  "tz_short": "PDT",
+  "tz_long": "America/Los_Angeles"
+  },
+  "period": 1,
+  "high": {
+  "fahrenheit": "68",
+  "celsius": "20"
+  },
+  "low": {
+  "fahrenheit": "50",
+  "celsius": "10"
+  },
+  "conditions": "Partly Cloudy",
+  "icon": "partlycloudy",
+  "icon_url": "http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",
+  "skyicon": "mostlysunny",
+  "pop": 0,
+  "qpf_allday": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_day": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_night": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "snow_allday": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_day": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_night": {
+  "in": 0,
+  "cm": 0
+  },
+  "maxwind": {
+  "mph": 21,
+  "kph": 34,
+  "dir": "West",
+  "degrees": 272
+  },
+  "avewind": {
+  "mph": 17,
+  "kph": 27,
+  "dir": "West",
+  "degrees": 272
+  },
+  "avehumidity": 72,
+  "maxhumidity": 94,
+  "minhumidity": 58
+  }, {
+  "date": {
+  "epoch": "1340863200",
+  "pretty": "11:00 PM PDT on June 27, 2012",
+  "day": 27,
+  "month": 6,
+  "year": 2012,
+  "yday": 178,
+  "hour": 23,
+  "min": "00",
+  "sec": 0,
+  "isdst": "1",
+  "monthname": "June",
+  "weekday_short": "Wed",
+  "weekday": "Wednesday",
+  "ampm": "PM",
+  "tz_short": "PDT",
+  "tz_long": "America/Los_Angeles"
+  },
+  "period": 2,
+  "high": {
+  "fahrenheit": "72",
+  "celsius": "22"
+  },
+  "low": {
+  "fahrenheit": "54",
+  "celsius": "12"
+  },
+  "conditions": "Partly Cloudy",
+  "icon": "partlycloudy",
+  "icon_url": "http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",
+  "skyicon": "mostlysunny",
+  "pop": 0,
+  "qpf_allday": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_day": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_night": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "snow_allday": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_day": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_night": {
+  "in": 0,
+  "cm": 0
+  },
+  "maxwind": {
+  "mph": 11,
+  "kph": 18,
+  "dir": "WSW",
+  "degrees": 255
+  },
+  "avewind": {
+  "mph": 9,
+  "kph": 14,
+  "dir": "WSW",
+  "degrees": 252
+  },
+  "avehumidity": 70,
+  "maxhumidity": 84,
+  "minhumidity": 54
+  }, {
+  "date": {
+  "epoch": "1340949600",
+  "pretty": "11:00 PM PDT on June 28, 2012",
+  "day": 28,
+  "month": 6,
+  "year": 2012,
+  "yday": 179,
+  "hour": 23,
+  "min": "00",
+  "sec": 0,
+  "isdst": "1",
+  "monthname": "June",
+  "weekday_short": "Thu",
+  "weekday": "Thursday",
+  "ampm": "PM",
+  "tz_short": "PDT",
+  "tz_long": "America/Los_Angeles"
+  },
+  "period": 3,
+  "high": {
+  "fahrenheit": "72",
+  "celsius": "22"
+  },
+  "low": {
+  "fahrenheit": "54",
+  "celsius": "12"
+  },
+  "conditions": "Partly Cloudy",
+  "icon": "partlycloudy",
+  "icon_url": "http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",
+  "skyicon": "partlycloudy",
+  "pop": 0,
+  "qpf_allday": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_day": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_night": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "snow_allday": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_day": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_night": {
+  "in": 0,
+  "cm": 0
+  },
+  "maxwind": {
+  "mph": 14,
+  "kph": 22,
+  "dir": "West",
+  "degrees": 265
+  },
+  "avewind": {
+  "mph": 12,
+  "kph": 19,
+  "dir": "WSW",
+  "degrees": 256
+  },
+  "avehumidity": 80,
+  "maxhumidity": 91,
+  "minhumidity": 56
+  }, {
+  "date": {
+  "epoch": "1341036000",
+  "pretty": "11:00 PM PDT on June 29, 2012",
+  "day": 29,
+  "month": 6,
+  "year": 2012,
+  "yday": 180,
+  "hour": 23,
+  "min": "00",
+  "sec": 0,
+  "isdst": "1",
+  "monthname": "June",
+  "weekday_short": "Fri",
+  "weekday": "Friday",
+  "ampm": "PM",
+  "tz_short": "PDT",
+  "tz_long": "America/Los_Angeles"
+  },
+  "period": 4,
+  "high": {
+  "fahrenheit": "68",
+  "celsius": "20"
+  },
+  "low": {
+  "fahrenheit": "52",
+  "celsius": "11"
+  },
+  "conditions": "Fog",
+  "icon": "partlycloudy",
+  "icon_url": "http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",
+  "skyicon": "mostlysunny",
+  "pop": 0,
+  "qpf_allday": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_day": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "qpf_night": {
+  "in": 0.00,
+  "mm": 0.0
+  },
+  "snow_allday": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_day": {
+  "in": 0,
+  "cm": 0
+  },
+  "snow_night": {
+  "in": 0,
+  "cm": 0
+  },
+  "maxwind": {
+  "mph": 11,
+  "kph": 18,
+  "dir": "West",
+  "degrees": 267
+  },
+  "avewind": {
+  "mph": 10,
+  "kph": 16,
+  "dir": "West",
+  "degrees": 272
+  },
+  "avehumidity": 79,
+  "maxhumidity": 93,
+  "minhumidity": 63
+  }]
+  }</string>
+
+    <string-array name="CA">
+        <item>Los_Angeles</item>
+        <item>Sacremento</item><item>San_Jose</item><item>San_Fransisco</item>
+        <item>Palo_Alto</item>
+        <item>Sunnyvale</item>
+        <item>Mountain_View</item>
+    </string-array>
+
+
+    <string-array name="FL">
+        <item>Orlando</item>
+        <item>Miami</item>
+        <item>Tampa</item>
+        <item>Jacksonville</item>
+        <item>Key_West</item>
+
+    </string-array>
+
+    <string-array name="MA">
+        <item>Boston</item>
+        <item>Cambridge</item>
+        <item>Lowell</item>
+        <item>Waltham</item>
+        <item>Springfield</item>
+        <item>Worcester</item>
+        <item>Amherst</item>
+    </string-array>
+
+    <string-array name="NY">
+        <item>New_York_City</item>
+        <item>Albany</item>
+        <item>Syracuse</item>
+        <item>Buffalo</item>
+
+    </string-array>
+
+
+</resources>
