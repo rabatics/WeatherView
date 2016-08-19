@@ -23,26 +23,31 @@ public class AddLocActivity extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Spinner spinnerst,spinnercity;
-    TextView statetxt,citytxt;
+  //  TextView statetxt,citytxt;
     Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_loc);
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        double longitude =0;
-        double latitude = 0;
+        GPSTracker gps = new GPSTracker(this);
+
+        // check if GPS enabled
 
 
         try {
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
-            GetLocation g = new GetLocation(getApplicationContext(), "" + latitude, "" + longitude);
-            g.execute();
-            Log.v("res", "check");
+          //  Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+                Log.v("res", latitude + ":" + longitude);
+                GetLocation g = new GetLocation(this, "" + latitude, "" + longitude);
+                g.execute();
+
+            }
         } catch (SecurityException e) {
+            Toast.makeText(this,e.toString(),Toast.LENGTH_LONG);
             preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
            editor=preferences.edit();
             editor.putString("curSt","CA");
@@ -51,8 +56,7 @@ public class AddLocActivity extends AppCompatActivity {
         }
         spinnerst = (Spinner) findViewById(R.id.spinner);
         spinnercity = (Spinner) findViewById(R.id.spinner2);
-        statetxt = (TextView) findViewById(R.id.statetxt);
-        citytxt = (TextView) findViewById(R.id.citytxt);
+
         next = (Button) findViewById(R.id.button);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -69,7 +73,7 @@ public class AddLocActivity extends AppCompatActivity {
                 spinnercity.setVisibility(View.VISIBLE);
                 state = (String) parent.getItemAtPosition(position);
                 ArrayAdapter<CharSequence> adapter = null;
-                statetxt.setText(state);
+              //  statetxt.setText(state);
                 switch (position) {
                     case 0:adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                             R.array.MA, android.R.layout.simple_spinner_item);
@@ -95,12 +99,12 @@ public class AddLocActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         city = (String) parent.getItemAtPosition(position);
-                        citytxt.setText(city);
+                       // citytxt.setText(city);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        citytxt.setText("");
+                       // citytxt.setText("");
                     }
                 });
 
@@ -108,7 +112,7 @@ public class AddLocActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                statetxt.setText("");
+               // statetxt.setText("");
             }
         });
 

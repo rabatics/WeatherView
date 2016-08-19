@@ -43,7 +43,7 @@ public class GetCurWeath extends AsyncTask<String,Void,String> {
         try {
             // Calendar rightnow= Calendar.getInstance();
 
-            URL url = new URL("http://api.wunderground.com/api/139e9eb507009804/conditions/q/"+this.state+"/"+this.city+".json");
+            URL url = new URL("http://api.wunderground.com/api/"+mContext.getResources().getString(R.string.key).toString()+"/conditions/q/"+this.state+"/"+this.city+".json");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             Log.v("Error check", "cf1 " + this.city + "," + this.state);

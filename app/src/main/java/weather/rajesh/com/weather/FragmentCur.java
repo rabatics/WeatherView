@@ -56,12 +56,12 @@ public class FragmentCur extends Fragment {
         //   data.execute();
 
         JSONObject ob=((NavDrawer)getActivity()).getCurrentWeather();
-        Log.v("weather check:", ob.toString());
+
         SharedPreferences p= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 city.setText(p.getString("curCt",""));
         state.setText(p.getString("curSt",""));
         if(ob!=null) {
-
+            Log.v("weather check:", ob.toString());
 
 
                 try {

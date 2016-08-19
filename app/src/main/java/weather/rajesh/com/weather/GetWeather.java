@@ -45,7 +45,7 @@ public class GetWeather extends AsyncTask<String,Void,String> {
         try {
            // Calendar rightnow= Calendar.getInstance();
 
-            URL url = new URL("http://api.wunderground.com/api/139e9eb507009804/forecast/q/"+this.state+"/"+this.city+".json");
+            URL url = new URL("http://api.wunderground.com/api/"+mContext.getResources().getString(R.string.key).toString()+"/forecast/q/"+this.state+"/"+this.city+".json");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             Log.v("Error check","f1 "+this.city+","+this.state);

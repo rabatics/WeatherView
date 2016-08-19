@@ -29,8 +29,8 @@ public class GetLocation extends AsyncTask<String,Void,String> {
     private Context mContext;
     private String lat;
     private String lon;
-    SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(mContext);
-    SharedPreferences.Editor editor=pref.edit();
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
     // private Semaphore s=new Semaphore(0);
 
     GetLocation(Context context, String lat,String lon){
@@ -38,6 +38,8 @@ public class GetLocation extends AsyncTask<String,Void,String> {
         this.mContext = context;
         this.lat=lat;
         this.lon=lon;
+        this.pref= PreferenceManager.getDefaultSharedPreferences(mContext);
+        this.editor=pref.edit();
     }
 
     @Override
@@ -49,7 +51,7 @@ public class GetLocation extends AsyncTask<String,Void,String> {
         try {
             // Calendar rightnow= Calendar.getInstance();
 
-            URL url = new URL("http://api.wunderground.com/api/139e9eb507009804/geolookup/q/"+this.lat+","+this.lon+".json");
+            URL url = new URL("http://api.wunderground.com/api/"+mContext.getResources().getString(R.string.key).toString()+"/geolookup/q/"+this.lat+","+this.lon+".json");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             Log.v("Error check","f1 "+this.lat+","+this.lon);
@@ -120,10 +122,10 @@ public class GetLocation extends AsyncTask<String,Void,String> {
                 o = new JSONObject(data);
                 //  JSONObject err=o.getJSONObject("response").getJSONObject("error");
 
-                JSONObject f = o.optJSONObject("location");
+                JSONObject f = o.getJSONObject("location");
               //  JSONObject n = f.optJSONObject("simpleforecast");
-                String state=f.optString("state");
-                String city=f.optString("city");
+                String state=f.getString("state");
+                String city=f.getString("city");
                 if(city.contains(" ")){
                     city=city.replace("\\s","_");
                 }
