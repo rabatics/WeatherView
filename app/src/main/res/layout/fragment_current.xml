@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/side_nav_bar">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/icon"
+        android:layout_above="@+id/temp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/temp"
+        android:textSize="50dp"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/icon"
+        android:layout_alignStart="@+id/icon" />
+
+    <TextView
+        android:layout_width="400dp"
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/city"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/temp"
+        android:layout_alignLeft="@+id/temp"
+        android:layout_alignStart="@+id/temp"
+
+        android:layout_alignRight="@+id/temp"
+        android:layout_alignEnd="@+id/temp" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/state"
+        android:layout_below="@+id/city"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

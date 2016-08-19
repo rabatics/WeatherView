@@ -9,7 +9,16 @@
         <item
             android:id="@+id/forecast"
             android:icon="@mipmap/weather"
-            android:title="Show Forecast" />
+            android:title="Selected Location Forecast" />
+        <item
+            android:id="@+id/curlocweath"
+            android:icon="@mipmap/weather"
+            android:title="Current Location Weather" />
+
+        <item
+            android:id="@+id/refresh"
+            android:icon="@mipmap/weather"
+            android:title="Refresh Data" />
 
         <item
             android:id="@+id/exit"

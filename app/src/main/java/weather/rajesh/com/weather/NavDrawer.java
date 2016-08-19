@@ -2,6 +2,8 @@ package weather.rajesh.com.weather;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -47,8 +49,20 @@ public class NavDrawer extends AppCompatActivity
     private String city;
         TextView navcity;
         TextView navstate;
+        String curSt;
+        String curCt;
+        JSONObject current;
         private SharedPreferences preferences;
         private SharedPreferences.Editor editor;
+
+        public void setCurrentWeather(JSONObject o){
+                current=o;
+        }
+
+        public JSONObject getCurrentWeather(){
+                return current;
+        }
+
 
         public HashMap<String, JSONObject> getLocations() {
                 return locations;
@@ -519,7 +533,7 @@ public class NavDrawer extends AppCompatActivity
     private int mode_cf=0;
 
 
-        public void saveMapToPref(){
+     /*   public void saveMapToPref(){
                 Gson gson = new Gson();
                 MapWrapper wrapper = new MapWrapper();
                  wrapper.setMyMap(getLocations());
@@ -541,7 +555,7 @@ public class NavDrawer extends AppCompatActivity
                 MapWrapper wrapper = gson.fromJson(wrapperStr, MapWrapper.class);
                 map = wrapper.getMyMap();
                 return map;
-        }
+        }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -556,8 +570,8 @@ public class NavDrawer extends AppCompatActivity
 
         state=extras.getString("state");
         city=extras.getString("city");
-        navstate.setText(state);
-            navcity.setText(city);
+     //   navstate.setText(state);
+        //    navcity.setText(city);
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -580,16 +594,19 @@ public class NavDrawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-            setLocations(getMapFromPref());
+            preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+           // preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+          //  setLocations(getMapFromPref());
+            curSt=preferences.getString("curSt","");
+            curCt=preferences.getString("curCt","");
             String key=  city+","+state;
-           if( locations.containsKey(key)){
-                   setWeather(locations.get(key));
-           }
-            else {
+           GetCurWeath c=new GetCurWeath(this,curSt,curCt);
+            c.execute();
                    GetWeather g = new GetWeather(this, state, city);
                    g.execute();
                    Log.v("data.length", ":" + new String(getResources().getString(R.string.data)));
-           }
+
         try {
            JSONObject data = new JSONObject(datas);
          /*   setWeather(data);
@@ -600,8 +617,9 @@ public class NavDrawer extends AppCompatActivity
                // wrapper.setMyMap(HtKpi);
                 String serializedMap = gson.toJson(wrapper);*/
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fr = new FragmentWeather();
-            fm.beginTransaction().replace(R.id.content, fr).commit();
+         //  Fragment fr = new FragmentCur();
+            Fragment frs=new FragmentWeather();
+            fm.beginTransaction().replace(R.id.content, frs).commit();
         }catch(JSONException e){
 Log.v("error",e.toString());
         }
@@ -663,6 +681,17 @@ Log.v("error",e.toString());
 
         if (id == R.id.change_city) {
             // Handle the camera action
+        }
+       /* else if(id==R.id.curlocweath){
+                FragmentManager fm = getSupportFragmentManager();
+                Fragment fr = new FragmentCur();
+                fm.beginTransaction().replace(R.id.content, fr).commit();
+        }*/
+        else if(id==R.id.curlocweath){
+
+                FragmentManager fm = getSupportFragmentManager();
+                Fragment fr = new FragmentCur();
+                fm.beginTransaction().replace(R.id.content, fr).commit();
         }
         else if (id == R.id.forecast) {
                 FragmentManager fm = getSupportFragmentManager();

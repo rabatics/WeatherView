@@ -30,6 +30,25 @@ public class AddLocActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_loc);
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        double longitude =0;
+        double latitude = 0;
+
+
+        try {
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+            GetLocation g = new GetLocation(getApplicationContext(), "" + latitude, "" + longitude);
+            g.execute();
+            Log.v("res", "check");
+        } catch (SecurityException e) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+           editor=preferences.edit();
+            editor.putString("curSt","CA");
+            editor.putString("curCt","San_Francisco");
+            editor.commit();
+        }
         spinnerst = (Spinner) findViewById(R.id.spinner);
         spinnercity = (Spinner) findViewById(R.id.spinner2);
         statetxt = (TextView) findViewById(R.id.statetxt);
@@ -96,10 +115,10 @@ public class AddLocActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!state.contentEquals("") && !city.contentEquals("")){
-                    Intent i=new Intent(getApplicationContext(),NavDrawer.class);
-                    i.putExtra("state",state);
-                    i.putExtra("city",city);
+                if (!state.contentEquals("") && !city.contentEquals("")) {
+                    Intent i = new Intent(getApplicationContext(), NavDrawer.class);
+                    i.putExtra("state", state);
+                    i.putExtra("city", city);
                     startActivity(i);
                     finish();
 
@@ -109,7 +128,7 @@ public class AddLocActivity extends AppCompatActivity {
         });
     }
 
-
+/*
     @Override
     public void onResume(){
         super.onResume();
@@ -117,17 +136,22 @@ public class AddLocActivity extends AppCompatActivity {
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         double longitude =0;
         double latitude = 0;
-        try {
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
-            GetLocation g=new GetLocation(getApplicationContext(),""+latitude,""+longitude);
-            g.execute();
-        }catch(SecurityException e){
 
-        }
+
+            try {
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+                GetLocation g = new GetLocation(this, "" + latitude, "" + longitude);
+                g.execute();
+                Log.v("res", "check");
+            } catch (SecurityException e) {
+
+            }
+        }*/
+
 
     }
 
 
-}
+
