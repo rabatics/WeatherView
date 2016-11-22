@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/change_city"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/loc"
             android:title="Change Location" />
         <item
             android:id="@+id/forecast"
@@ -18,8 +18,11 @@
         <item
             android:id="@+id/refresh"
             android:icon="@mipmap/weather"
-            android:title="Refresh Data" />
-
+            android:title="Show Map" />
+        <item
+            android:id="@+id/emgCon"
+            android:icon="@drawable/loc"
+            android:title="Emergency Contact" />
         <item
             android:id="@+id/exit"
             android:icon="@drawable/ic_menu_manage"

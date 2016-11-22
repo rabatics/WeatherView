@@ -99,7 +99,7 @@ public class GetCurWeath extends AsyncTask<String,Void,String> {
         progressDialog = new ProgressDialog(
                 mContext);
         progressDialog.setMessage("Getting Current Weather......");
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
     }

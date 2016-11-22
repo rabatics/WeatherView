@@ -1,17 +1,25 @@
 package weather.rajesh.com.weather;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,16 +30,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +68,7 @@ public class NavDrawer extends AppCompatActivity
     private String city;
         TextView navcity;
         TextView navstate;
+        ImageView weath;
         String curSt;
         String curCt;
         JSONObject current;
@@ -57,6 +77,7 @@ public class NavDrawer extends AppCompatActivity
 
         public void setCurrentWeather(JSONObject o){
                 current=o;
+
         }
 
         public JSONObject getCurrentWeather(){
@@ -77,441 +98,6 @@ public class NavDrawer extends AppCompatActivity
         }
 
         private HashMap<String,JSONObject> locations=new HashMap<>();
-    String datas="{\n" +
-            "  \"forecastday\": [{\n" +
-            "  \"date\": {\n" +
-            "  \"epoch\": \"1340776800\",\n" +
-            "  \"pretty\": \"11:00 PM PDT on June 26, 2012\",\n" +
-            "  \"day\": 26,\n" +
-            "  \"month\": 6,\n" +
-            "  \"year\": 2012,\n" +
-            "  \"yday\": 177,\n" +
-            "  \"hour\": 23,\n" +
-            "  \"min\": \"00\",\n" +
-            "  \"sec\": 0,\n" +
-            "  \"isdst\": \"1\",\n" +
-            "  \"monthname\": \"June\",\n" +
-            "  \"weekday_short\": \"Tue\",\n" +
-            "  \"weekday\": \"Tuesday\",\n" +
-            "  \"ampm\": \"PM\",\n" +
-            "  \"tz_short\": \"PDT\",\n" +
-            "  \"tz_long\": \"America/Los_Angeles\"\n" +
-            "  },\n" +
-            "  \"period\": 1,\n" +
-            "  \"high\": {\n" +
-            "  \"fahrenheit\": \"68\",\n" +
-            "  \"celsius\": \"20\"\n" +
-            "  },\n" +
-            "  \"low\": {\n" +
-            "  \"fahrenheit\": \"50\",\n" +
-            "  \"celsius\": \"10\"\n" +
-            "  },\n" +
-            "  \"conditions\": \"Partly Cloudy\",\n" +
-            "  \"icon\": \"partlycloudy\",\n" +
-            "  \"icon_url\": \"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif\",\n" +
-            "  \"skyicon\": \"mostlysunny\",\n" +
-            "  \"pop\": 0,\n" +
-            "  \"qpf_allday\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_day\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_night\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"snow_allday\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_day\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_night\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"maxwind\": {\n" +
-            "  \"mph\": 21,\n" +
-            "  \"kph\": 34,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 272\n" +
-            "  },\n" +
-            "  \"avewind\": {\n" +
-            "  \"mph\": 17,\n" +
-            "  \"kph\": 27,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 272\n" +
-            "  },\n" +
-            "  \"avehumidity\": 72,\n" +
-            "  \"maxhumidity\": 94,\n" +
-            "  \"minhumidity\": 58\n" +
-            "  }, {\n" +
-            "  \"date\": {\n" +
-            "  \"epoch\": \"1340863200\",\n" +
-            "  \"pretty\": \"11:00 PM PDT on June 27, 2012\",\n" +
-            "  \"day\": 27,\n" +
-            "  \"month\": 6,\n" +
-            "  \"year\": 2012,\n" +
-            "  \"yday\": 178,\n" +
-            "  \"hour\": 23,\n" +
-            "  \"min\": \"00\",\n" +
-            "  \"sec\": 0,\n" +
-            "  \"isdst\": \"1\",\n" +
-            "  \"monthname\": \"June\",\n" +
-            "  \"weekday_short\": \"Wed\",\n" +
-            "  \"weekday\": \"Wednesday\",\n" +
-            "  \"ampm\": \"PM\",\n" +
-            "  \"tz_short\": \"PDT\",\n" +
-            "  \"tz_long\": \"America/Los_Angeles\"\n" +
-            "  },\n" +
-            "  \"period\": 2,\n" +
-            "  \"high\": {\n" +
-            "  \"fahrenheit\": \"72\",\n" +
-            "  \"celsius\": \"22\"\n" +
-            "  },\n" +
-            "  \"low\": {\n" +
-            "  \"fahrenheit\": \"54\",\n" +
-            "  \"celsius\": \"12\"\n" +
-            "  },\n" +
-            "  \"conditions\": \"Partly Cloudy\",\n" +
-            "  \"icon\": \"partlycloudy\",\n" +
-            "  \"icon_url\": \"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif\",\n" +
-            "  \"skyicon\": \"mostlysunny\",\n" +
-            "  \"pop\": 0,\n" +
-            "  \"qpf_allday\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_day\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_night\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"snow_allday\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_day\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_night\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"maxwind\": {\n" +
-            "  \"mph\": 11,\n" +
-            "  \"kph\": 18,\n" +
-            "  \"dir\": \"WSW\",\n" +
-            "  \"degrees\": 255\n" +
-            "  },\n" +
-            "  \"avewind\": {\n" +
-            "  \"mph\": 9,\n" +
-            "  \"kph\": 14,\n" +
-            "  \"dir\": \"WSW\",\n" +
-            "  \"degrees\": 252\n" +
-            "  },\n" +
-            "  \"avehumidity\": 70,\n" +
-            "  \"maxhumidity\": 84,\n" +
-            "  \"minhumidity\": 54\n" +
-            "  }, {\n" +
-            "  \"date\": {\n" +
-            "  \"epoch\": \"1340949600\",\n" +
-            "  \"pretty\": \"11:00 PM PDT on June 28, 2012\",\n" +
-            "  \"day\": 28,\n" +
-            "  \"month\": 6,\n" +
-            "  \"year\": 2012,\n" +
-            "  \"yday\": 179,\n" +
-            "  \"hour\": 23,\n" +
-            "  \"min\": \"00\",\n" +
-            "  \"sec\": 0,\n" +
-            "  \"isdst\": \"1\",\n" +
-            "  \"monthname\": \"June\",\n" +
-            "  \"weekday_short\": \"Thu\",\n" +
-            "  \"weekday\": \"Thursday\",\n" +
-            "  \"ampm\": \"PM\",\n" +
-            "  \"tz_short\": \"PDT\",\n" +
-            "  \"tz_long\": \"America/Los_Angeles\"\n" +
-            "  },\n" +
-            "  \"period\": 3,\n" +
-            "  \"high\": {\n" +
-            "  \"fahrenheit\": \"72\",\n" +
-            "  \"celsius\": \"22\"\n" +
-            "  },\n" +
-            "  \"low\": {\n" +
-            "  \"fahrenheit\": \"54\",\n" +
-            "  \"celsius\": \"12\"\n" +
-            "  },\n" +
-            "  \"conditions\": \"Partly Cloudy\",\n" +
-            "  \"icon\": \"mostlycloudy\",\n" +
-            "  \"icon_url\": \"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif\",\n" +
-            "  \"skyicon\": \"partlycloudy\",\n" +
-            "  \"pop\": 0,\n" +
-            "  \"qpf_allday\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_day\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_night\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"snow_allday\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_day\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_night\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"maxwind\": {\n" +
-            "  \"mph\": 14,\n" +
-            "  \"kph\": 22,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 265\n" +
-            "  },\n" +
-            "  \"avewind\": {\n" +
-            "  \"mph\": 12,\n" +
-            "  \"kph\": 19,\n" +
-            "  \"dir\": \"WSW\",\n" +
-            "  \"degrees\": 256\n" +
-            "  },\n" +
-            "  \"avehumidity\": 80,\n" +
-            "  \"maxhumidity\": 91,\n" +
-            "  \"minhumidity\": 56\n" +
-            "  }, {\n" +
-            "  \"date\": {\n" +
-            "  \"epoch\": \"1341036000\",\n" +
-            "  \"pretty\": \"11:00 PM PDT on June 29, 2012\",\n" +
-            "  \"day\": 29,\n" +
-            "  \"month\": 6,\n" +
-            "  \"year\": 2012,\n" +
-            "  \"yday\": 180,\n" +
-            "  \"hour\": 23,\n" +
-            "  \"min\": \"00\",\n" +
-            "  \"sec\": 0,\n" +
-            "  \"isdst\": \"1\",\n" +
-            "  \"monthname\": \"June\",\n" +
-            "  \"weekday_short\": \"Fri\",\n" +
-            "  \"weekday\": \"Friday\",\n" +
-            "  \"ampm\": \"PM\",\n" +
-            "  \"tz_short\": \"PDT\",\n" +
-            "  \"tz_long\": \"America/Los_Angeles\"\n" +
-            "  },\n" +
-            "  \"period\": 4,\n" +
-            "  \"high\": {\n" +
-            "  \"fahrenheit\": \"68\",\n" +
-            "  \"celsius\": \"20\"\n" +
-            "  },\n" +
-            "  \"low\": {\n" +
-            "  \"fahrenheit\": \"52\",\n" +
-            "  \"celsius\": \"11\"\n" +
-            "  },\n" +
-            "  \"conditions\": \"Fog\",\n" +
-            "  \"icon\": \"thunderstorm\",\n" +
-            "  \"icon_url\": \"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif\",\n" +
-            "  \"skyicon\": \"mostlysunny\",\n" +
-            "  \"pop\": 0,\n" +
-            "  \"qpf_allday\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_day\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_night\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"snow_allday\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_day\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_night\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"maxwind\": {\n" +
-            "  \"mph\": 11,\n" +
-            "  \"kph\": 18,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 267\n" +
-            "  },\n" +
-            "  \"avewind\": {\n" +
-            "  \"mph\": 10,\n" +
-            "  \"kph\": 16,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 272\n" +
-            "  },\n" +
-            "  \"avehumidity\": 79,\n" +
-            "  \"maxhumidity\": 93,\n" +
-            "  \"minhumidity\": 63\n" +
-            "  }, {\n" +
-            "  \"date\": {\n" +
-            "  \"epoch\": \"1341036000\",\n" +
-            "  \"pretty\": \"11:00 PM PDT on June 29, 2012\",\n" +
-            "  \"day\": 29,\n" +
-            "  \"month\": 6,\n" +
-            "  \"year\": 2012,\n" +
-            "  \"yday\": 180,\n" +
-            "  \"hour\": 23,\n" +
-            "  \"min\": \"00\",\n" +
-            "  \"sec\": 0,\n" +
-            "  \"isdst\": \"1\",\n" +
-            "  \"monthname\": \"June\",\n" +
-            "  \"weekday_short\": \"Fri\",\n" +
-            "  \"weekday\": \"Friday\",\n" +
-            "  \"ampm\": \"PM\",\n" +
-            "  \"tz_short\": \"PDT\",\n" +
-            "  \"tz_long\": \"America/Los_Angeles\"\n" +
-            "  },\n" +
-            "  \"period\": 4,\n" +
-            "  \"high\": {\n" +
-            "  \"fahrenheit\": \"68\",\n" +
-            "  \"celsius\": \"20\"\n" +
-            "  },\n" +
-            "  \"low\": {\n" +
-            "  \"fahrenheit\": \"52\",\n" +
-            "  \"celsius\": \"11\"\n" +
-            "  },\n" +
-            "  \"conditions\": \"Fog\",\n" +
-            "  \"icon\": \"thunderstorm\",\n" +
-            "  \"icon_url\": \"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif\",\n" +
-            "  \"skyicon\": \"mostlysunny\",\n" +
-            "  \"pop\": 0,\n" +
-            "  \"qpf_allday\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_day\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_night\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"snow_allday\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_day\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_night\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"maxwind\": {\n" +
-            "  \"mph\": 11,\n" +
-            "  \"kph\": 18,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 267\n" +
-            "  },\n" +
-            "  \"avewind\": {\n" +
-            "  \"mph\": 10,\n" +
-            "  \"kph\": 16,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 272\n" +
-            "  },\n" +
-            "  \"avehumidity\": 79,\n" +
-            "  \"maxhumidity\": 93,\n" +
-            "  \"minhumidity\": 63\n" +
-            "  }, {\n" +
-            "  \"date\": {\n" +
-            "  \"epoch\": \"1341036000\",\n" +
-            "  \"pretty\": \"11:00 PM PDT on June 29, 2012\",\n" +
-            "  \"day\": 29,\n" +
-            "  \"month\": 6,\n" +
-            "  \"year\": 2012,\n" +
-            "  \"yday\": 180,\n" +
-            "  \"hour\": 23,\n" +
-            "  \"min\": \"00\",\n" +
-            "  \"sec\": 0,\n" +
-            "  \"isdst\": \"1\",\n" +
-            "  \"monthname\": \"June\",\n" +
-            "  \"weekday_short\": \"Fri\",\n" +
-            "  \"weekday\": \"Friday\",\n" +
-            "  \"ampm\": \"PM\",\n" +
-            "  \"tz_short\": \"PDT\",\n" +
-            "  \"tz_long\": \"America/Los_Angeles\"\n" +
-            "  },\n" +
-            "  \"period\": 4,\n" +
-            "  \"high\": {\n" +
-            "  \"fahrenheit\": \"36\",\n" +
-            "  \"celsius\": \"3\"\n" +
-            "  },\n" +
-            "  \"low\": {\n" +
-            "  \"fahrenheit\": \"30\",\n" +
-            "  \"celsius\": \"-1\"\n" +
-            "  },\n" +
-            "  \"conditions\": \"Fog\",\n" +
-            "  \"icon\": \"snow\",\n" +
-            "  \"icon_url\": \"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif\",\n" +
-            "  \"skyicon\": \"mostlysunny\",\n" +
-            "  \"pop\": 0,\n" +
-            "  \"qpf_allday\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_day\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"qpf_night\": {\n" +
-            "  \"in\": 0.00,\n" +
-            "  \"mm\": 0.0\n" +
-            "  },\n" +
-            "  \"snow_allday\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_day\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"snow_night\": {\n" +
-            "  \"in\": 0,\n" +
-            "  \"cm\": 0\n" +
-            "  },\n" +
-            "  \"maxwind\": {\n" +
-            "  \"mph\": 11,\n" +
-            "  \"kph\": 18,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 267\n" +
-            "  },\n" +
-            "  \"avewind\": {\n" +
-            "  \"mph\": 10,\n" +
-            "  \"kph\": 16,\n" +
-            "  \"dir\": \"West\",\n" +
-            "  \"degrees\": 272\n" +
-            "  },\n" +
-            "  \"avehumidity\": 79,\n" +
-            "  \"maxhumidity\": 93,\n" +
-            "  \"minhumidity\": 63\n" +
-            "  }]\n" +
-            "  }";
 
 
 
@@ -529,32 +115,86 @@ public class NavDrawer extends AppCompatActivity
         this.mode_cf = 1;
     }
 
+        public void setSelState(String st){
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                View header=navigationView.getHeaderView(0);
+                state=st;
+                navstate = (TextView)header.findViewById(R.id.statetext);
+                navstate.setText(state);
+        }
 
-    private int mode_cf=0;
+        public void setSelCity(String ct){
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                View header=navigationView.getHeaderView(0);
+                city=ct;
+                navcity = (TextView)header.findViewById(R.id.citytext);
+                navcity.setText(city);
+        }
+
+        public String getSelState(){
+                return state;
+        }
 
 
-     /*   public void saveMapToPref(){
+        public String getSelCity(){
+                return city;
+        }
+
+
+        private int mode_cf=1;
+
+
+
+
+
+     /*  public void saveMapToPref(){
                 Gson gson = new Gson();
-                MapWrapper wrapper = new MapWrapper();
-                 wrapper.setMyMap(getLocations());
-                String serializedMap = gson.toJson(wrapper);
+
+           HashMap<String,HashMap<String,String>> today=new HashMap<>();
+           Calendar c=Calendar.getInstance();
+            String date=(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH)+1);
+           Log.v("date:", date);
+           HashMap<String,String> locations=new HashMap<>();
+           for(Map.Entry e:getLocations().entrySet()){
+               locations.put((String)e.getKey(),e.getValue().toString());
+           }
+         today.put(date,locations);
+           String wrapper = gson.toJson(today);
+
+
                 preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 editor=preferences.edit();
                 Log.d("Error check", "saving map  : ");
-                editor.putString("locweath", serializedMap);
+
+                editor.putString("locweath", wrapper);
                 editor.commit();
 
         }
 
-        public HashMap getMapFromPref(){
-               HashMap<String,JSONObject> map=new HashMap<>();
+        public HashMap<String,JSONObject> getMapFromPref(){
+               HashMap<String,String> map=new HashMap<>();
                 Gson gson=new Gson();
                 preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String wrapperStr = preferences.getString("locweath", "");
+                String wrapperStr = preferences.getString("locweath", "failed");
                 Log.d("Error check", "getting map  : ");
-                MapWrapper wrapper = gson.fromJson(wrapperStr, MapWrapper.class);
-                map = wrapper.getMyMap();
-                return map;
+                java.lang.reflect.Type type = new TypeToken<HashMap<String,String>>(){}.getType();
+                 if(!wrapperStr.contentEquals("failed")) {
+                  map = gson.fromJson(wrapperStr, type);
+                 }
+              //  map = wrapper.getMyMapMap();
+                Calendar c=Calendar.getInstance();
+                String date=(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH)+1);
+                HashMap<String, JSONObject> today=new HashMap<>();
+                if(map.containsKey(date)){
+
+                    try{
+                        today.put(date,new JSONObject(map.get(date)));
+                    }
+                    catch(JSONException e){
+                    }
+                }
+
+                return today;
         }*/
 
     @Override
@@ -564,14 +204,12 @@ public class NavDrawer extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle extras= getIntent().getExtras();
-            navcity=(TextView)findViewById(R.id.citytext);
-            navstate=(TextView)findViewById(R.id.statetext);
+
 
 
         state=extras.getString("state");
         city=extras.getString("city");
-     //   navstate.setText(state);
-        //    navcity.setText(city);
+
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -595,34 +233,44 @@ public class NavDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
             preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            View header=navigationView.getHeaderView(0);
+            weath=(ImageView)header.findViewById(R.id.imageView);
+            navcity = (TextView)header.findViewById(R.id.citytext);
+            navstate = (TextView)header.findViewById(R.id.statetext);
+            weath.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            FragmentManager fm = getSupportFragmentManager();
+                            //  Fragment fr = new FragmentCur();
+                            Fragment frs=new FragmentMain();
+                            fm.beginTransaction().replace(R.id.content, frs).commit();
+                    }
+            });
            // preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
           //  setLocations(getMapFromPref());
+            navstate.setText(state);
+            navcity.setText(city);
             curSt=preferences.getString("curSt","");
             curCt=preferences.getString("curCt","");
             String key=  city+","+state;
+
            GetCurWeath c=new GetCurWeath(this,curSt,curCt);
             c.execute();
-                   GetWeather g = new GetWeather(this, state, city);
-                   g.execute();
+        //    locations=getMapFromPref();
+           // if(!locations.containsKey(city+","+state)) {
+                GetWeather g = new GetWeather(this, state, city);
+                g.execute();
+          //  }
                    Log.v("data.length", ":" + new String(getResources().getString(R.string.data)));
 
-        try {
-           JSONObject data = new JSONObject(datas);
-         /*   setWeather(data);
-            Log.v("data:",data.toString());*/
 
-              /*  Gson gson = new Gson();
-                MapWrapper wrapper = new MapWrapper();
-               // wrapper.setMyMap(HtKpi);
-                String serializedMap = gson.toJson(wrapper);*/
+
             FragmentManager fm = getSupportFragmentManager();
          //  Fragment fr = new FragmentCur();
-            Fragment frs=new FragmentWeather();
+            Fragment frs=new FragmentMain();
             fm.beginTransaction().replace(R.id.content, frs).commit();
-        }catch(JSONException e){
-Log.v("error",e.toString());
-        }
+
 
       /*  ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -640,6 +288,8 @@ Log.v("error",e.toString());
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -680,13 +330,15 @@ Log.v("error",e.toString());
         int id = item.getItemId();
 
         if (id == R.id.change_city) {
-            // Handle the camera action
-        }
-       /* else if(id==R.id.curlocweath){
                 FragmentManager fm = getSupportFragmentManager();
-                Fragment fr = new FragmentCur();
+                Fragment fr = new FragmentChangeLoc();
+                fm.beginTransaction().replace(R.id.content, fr).commit(); // Handle the camera action
+        }
+        else if(id==R.id.refresh){
+                FragmentManager fm = getSupportFragmentManager();
+                Fragment fr = new FragmentMaps();
                 fm.beginTransaction().replace(R.id.content, fr).commit();
-        }*/
+        }
         else if(id==R.id.curlocweath){
 
                 FragmentManager fm = getSupportFragmentManager();
@@ -698,18 +350,155 @@ Log.v("error",e.toString());
                 Fragment fr = new FragmentWeather();
                 fm.beginTransaction().replace(R.id.content, fr).commit();
         }
-        else if (id == R.id.exit) {
+        else if(id== R.id.emgCon){
+            emergencyContact();
+        }
 
+
+
+
+
+        else if (id == R.id.exit) {
+          //  saveMapToPref();
+           SharedPreferences.Editor e=preferences.edit();
+            e.remove("locweath");
+            e.commit();
+
+                finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public void emergencyContact(){
+        final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        final AlertDialog dialog = builder2.create();
+
+        dialog.setCancelable(true);
+
+        LinearLayout layout = new LinearLayout(this);
+        ScrollView view = new ScrollView(this);
+        TableLayout table = new TableLayout(this);
+
+        ContentResolver resolver = getContentResolver();
+        Cursor cursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                new String[]{"display_name", "data1"}, null, null, null);
+
+        while (cursor.moveToNext()) {
+            TableRow tableRow = new TableRow(this);
+
+            TextView contactName = new TextView(this);
+            contactName.setPadding(10, 10, 10, 10);
+            contactName.setTextSize(20);
+            contactName.setTextColor(Color.BLACK);
+
+            TextView contactPhone = new TextView(this);
+            contactPhone.setPadding(10, 10, 10, 10);
+            contactPhone.setTextSize(20);
+            contactPhone.setTextColor(Color.BLUE);
+
+            String name = cursor.getString(0);
+            final String phoneNumber = cursor.getString(1);
+
+            contactName.setText(name);
+            contactPhone.setText(phoneNumber);
+
+            tableRow.addView(contactName);
+            tableRow.addView(contactPhone);
+
+            tableRow.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder confirm = new AlertDialog.Builder(NavDrawer.this);
+                    confirm.setTitle("Confirm Send Alert SMS");
+                    confirm.setMessage("Are you sure you want to send an Alert SMS to this contact ?");
+
+                    confirm.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            // Write your code here to invoke YES event
+                            SmsManager sms = SmsManager.getDefault();
+                            SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            double latit=Double.parseDouble(pref.getString("curLat", "37.776289"));
+                            double longit=Double.parseDouble(pref.getString("curLong","-122.395234"));
+                            sms.sendTextMessage(phoneNumber, null,"Hi,I need help. I am located at :\n https://www.google.com/maps/place/"+latit+"+"+longit+"/@"+latit+","+longit+",15z ", null, null);
+                            Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    // Setting Negative "NO" Button
+                    confirm.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog1, int which) {
+                            // Write your code here to invoke NO event
+                            Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                            dialog1.cancel();
+                            dialog.cancel();
+                        }
+                    });
+
+                    // Showing Alert Message
+                    confirm.show();
+
+
+
+
+
+
+
+
+                }
+            });
+            table.addView(tableRow);
+
+        }
+        cursor.close();
+        view.addView(table);
+        layout.addView(view);
+        dialog.setView(layout);
+        dialog.show();
+
+
+    }
+
+
+
+
+
+
+
+
 }
 
 
 /*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);

@@ -10,13 +10,23 @@ import java.util.HashMap;
  */
 public class MapWrapper {
 
-    public HashMap<String, JSONObject> getMyMap() {
-        return myMap;
+
+    private HashMap<String,HashMap<String,JSONObject>> myMapMap=new HashMap<>();
+
+
+
+    public HashMap<String, HashMap<String,JSONObject>> getMyMapMap() {
+        if(myMapMap.equals("")) {
+            myMapMap = new HashMap<>();
+        }
+        return myMapMap;
     }
 
-    public void setMyMap(HashMap<String, JSONObject> myMap) {
-        this.myMap = myMap;
+    public void setMyMapMap(HashMap<String, HashMap<String,JSONObject>> myMapMap) {
+        this.myMapMap = myMapMap;
     }
 
-    private HashMap<String, JSONObject> myMap;
+
+
+
 }

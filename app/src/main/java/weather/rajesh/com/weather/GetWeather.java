@@ -101,14 +101,14 @@ public class GetWeather extends AsyncTask<String,Void,String> {
         progressDialog = new ProgressDialog(
                 mContext);
         progressDialog.setMessage("Getting Weather......");
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
     }
 
     protected void onPostExecute(String data){
         JSONObject o = new JSONObject();
-        progressDialog.cancel();
+        if(progressDialog.isShowing()){progressDialog.cancel();}
         Log.v("Error check", "f3");
 
         try {

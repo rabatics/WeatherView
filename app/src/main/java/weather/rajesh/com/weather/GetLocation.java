@@ -107,7 +107,7 @@ public class GetLocation extends AsyncTask<String,Void,String> {
         progressDialog = new ProgressDialog(
                 mContext);
         progressDialog.setMessage("Getting Location......");
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
     }

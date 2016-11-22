@@ -42,6 +42,11 @@ public class AddLocActivity extends AppCompatActivity {
                 double latitude = gps.getLatitude();
                 double longitude = gps.getLongitude();
                 Log.v("res", latitude + ":" + longitude);
+                preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                editor=preferences.edit();
+                editor.putString("curLat",""+latitude);
+                editor.putString("curLong",""+longitude);
+                editor.commit();
                 GetLocation g = new GetLocation(this, "" + latitude, "" + longitude);
                 g.execute();
 
@@ -75,23 +80,27 @@ public class AddLocActivity extends AppCompatActivity {
                 ArrayAdapter<CharSequence> adapter = null;
               //  statetxt.setText(state);
                 switch (position) {
-                    case 0:adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                    case 0:adapter = ArrayAdapter.createFromResource(getBaseContext(),
                             R.array.MA, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         break;
 
-                    case 1:adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                    case 1:adapter = ArrayAdapter.createFromResource(getBaseContext(),
                                 R.array.CA, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 break;
-                    case 2: adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                    case 2: adapter = ArrayAdapter.createFromResource(getBaseContext(),
                                 R.array.NY, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         break;
-                    case 3: adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                    case 3: adapter = ArrayAdapter.createFromResource(getBaseContext(),
                                 R.array.FL, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             break;
 
                 }
 
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 
                 spinnercity.setAdapter(adapter);
 

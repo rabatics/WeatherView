@@ -42,7 +42,7 @@ public class CustomAdapter extends ArrayAdapter {
             String condition=l.get(2);
             Log.v("condn",":"+condition);
          //   System.out.println(user + ":" + l.get(0));
-            if ( condition.contains("clear")) {
+            if ( condition.contains("clear")||condition.contains("sunny")) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.sunny, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textsun);
 
@@ -50,11 +50,11 @@ public class CustomAdapter extends ArrayAdapter {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.partlycloudy, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textpc);
             }
-            else if(condition.contains("mostlycloudy")) {
+            else if(condition.contains("mostlycloudy")||condition.contains("cloudy")) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.mostlycloudy, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textmc);
             }
-            else if(condition.contains("storm")) {
+            else if(condition.contains("storm") || condition.contains("rain")) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.thunderstorm, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textstorm);
             }
@@ -74,7 +74,7 @@ public class CustomAdapter extends ArrayAdapter {
             vh = (ViewHolder) convertView.getTag();
             String condition=l.get(2);
             //   System.out.println(user + ":" + l.get(0));
-            if ( condition.contains("clear")) {
+            if ( condition.contains("clear")||condition.contains("sunny")) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.sunny, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textsun);
 
@@ -82,11 +82,11 @@ public class CustomAdapter extends ArrayAdapter {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.partlycloudy, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textpc);
             }
-            else if(condition.contains("mostlycloudy")) {
+            else if(condition.contains("mostlycloudy")||condition.contains("cloudy")) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.mostlycloudy, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textmc);
             }
-            else if(condition.contains("storm")) {
+            else if(condition.contains("storm") || condition.contains("rain")) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.thunderstorm, null);
                 vh.mText= (TextView)convertView.findViewById(R.id.textstorm);
             }
@@ -103,7 +103,7 @@ public class CustomAdapter extends ArrayAdapter {
         }
 
 
-        vh.mText.setText(l.get(0)+"  "+l.get(1));
+        vh.mText.setText(l.get(0)+"      "+l.get(1));
 
 
 

@@ -11,21 +11,22 @@
     android:background="@drawable/side_nav_bar">
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner2"
-        android:visibility="invisible"
+        android:touchscreenBlocksFocus="false"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,49 +44,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Select City"
         android:id="@+id/textView2"
+        android:layout_marginTop="78dp"
         android:layout_below="@+id/spinner"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="68dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="STATE:"
-        android:id="@+id/textView4"
-        android:textSize="20dp"
-        android:layout_below="@+id/spinner2"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/statetxt"
-        android:layout_above="@+id/textView5"
-        android:layout_toRightOf="@+id/citytxt"
-        android:layout_toEndOf="@+id/citytxt" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="CITY:"
-        android:id="@+id/textView5"
-        android:textSize="20dp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/citytxt"
-        android:layout_alignTop="@+id/textView5"
-        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -94,7 +56,7 @@
         android:text="Get Weather Info"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_marginBottom="52dp" />
+        android:layout_marginBottom="52dp"
+        android:background="@drawable/pc"
+        android:layout_toRightOf="@+id/textView2" />
 </RelativeLayout>

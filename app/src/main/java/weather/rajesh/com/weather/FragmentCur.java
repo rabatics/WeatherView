@@ -9,15 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.w3c.dom.Text;
 
 /**
  * Created by rajesh on 8/16/2016.
@@ -28,6 +24,8 @@ public class FragmentCur extends Fragment {
     TextView temp;
     TextView city;
     TextView state;
+    TextView fl;
+    TextView wind;
     View chatview;
     public FragmentCur(){
 
@@ -48,9 +46,11 @@ public class FragmentCur extends Fragment {
         View dataview=inflater.inflate(R.layout.fragment_current, container, false);
 
         weatherfc=(ImageView)dataview.findViewById(R.id.icon);
-        temp=(TextView)dataview.findViewById(R.id.temp);
-        city=(TextView)dataview.findViewById(R.id.city);
+        temp=(TextView)dataview.findViewById(R.id.textView);
+        city=(TextView)dataview.findViewById(R.id.citytxt);
         state=(TextView)dataview.findViewById(R.id.state);
+        fl=(TextView)dataview.findViewById(R.id.fl);
+        wind=(TextView)dataview.findViewById(R.id.wind);
 
         int mode=((NavDrawer)getActivity()).getMode_cf();
         //   data.execute();
@@ -67,16 +67,42 @@ city.setText(p.getString("curCt",""));
                 try {
 
                     String condn = ob.getString("icon");
-                    String stc = ob.getString("temp_c") + " C";
-                    String stf = ob.getString("temp_f") + " F";
-                    temp.setText(stc);
-                switch(condn){
-                   case "partlycloudy":weatherfc.setImageResource(R.mipmap.partlycloudy);
-                                        break;
-                    case "thunderstorm":weatherfc.setImageResource(R.mipmap.thunderstorm);
-                                        break;
-                    default:weatherfc.setImageResource(R.mipmap.sunny);
-                }
+                    String flc=ob.getString("feelslike_c")+" "+(char) 0x00B0+"C";
+                    String flf=ob.getString("feelslike_f")+" "+(char) 0x00B0+"F";
+                    String stc = ob.getString("temp_c") +" "+(char) 0x00B0+ "C";
+                    String stf = ob.getString("temp_f") +" "+(char) 0x00B0+ "F";
+                    String windmph=ob.getString("wind_mph")+" mph";
+                    String windkph=ob.getString("wind_kph")+" kph";
+                    wind.setText(windmph);
+                   int cf=((NavDrawer)getActivity()).getMode_cf();
+                   if(cf==0) {
+                       temp.setText(stc);
+                       fl.setText(flc);
+
+                   }
+                    else{
+                       temp.setText(stf);
+                       fl.setText(flf);
+                   }
+
+                   if(condn.contains("partlycloudy")) {
+                       weatherfc.setImageResource(R.mipmap.partlycloudy);
+                   }
+                   else if(condn.contains("storm")||condn.contains("rain")) {
+
+                       weatherfc.setImageResource(R.mipmap.thunderstorm);
+                   }
+                   else if(condn.contains("mostlycloudy")||condn.contains("cloudy")){
+                        weatherfc.setImageResource(R.mipmap.mostlycloudy);
+                   }
+                   else if(condn.contains("clear")||condn.contains("sunny")){
+                       weatherfc.setImageResource(R.mipmap.sunny);
+                   }
+                   else if(condn.contains("snow")){
+                       weatherfc.setImageResource(R.mipmap.snow);
+                   }
+
+
                     Log.v("list", condn+":"+stc+":"+stf);
 
                 } catch (JSONException e) {
